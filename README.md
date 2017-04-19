@@ -1,6 +1,6 @@
 # WELCOME
 this a paragraph~
 # WEB
--about html/css
--about ECMAScript 5
--node.js & vue.js
+-about html/css<br/>
+-about ECMAScript 5<br/>
+-node.js & vue.js<br/>
