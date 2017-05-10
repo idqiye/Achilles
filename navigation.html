@@ -9,10 +9,83 @@
   <link type="image/x-icon" rel="shortcut icon" href="">
   <link rel="stylesheet" href="">
   <style>
-  
+    .ul1 {
+      margin: 5px;
+      padding: 0;
+    }
+    ul {
+      list-style-type: none;
+    }
+    .ul1>li {
+      float: left;
+      width: 100px;
+      height: 2em;
+      margin-right: 4px;
+      text-align: center;
+      background: black;
+      line-height: 2em;
+      border-radius: .5em .5em 0 0;
+    }
+    .ul1 a {
+      color: white;
+      text-decoration: none;
+    }
+    .ul2 {
+      display: none;
+      padding: 0;
+      background: gray;
+      border-radius: 0 0 .5em .5em;
+    }
+    .ul2>li a{
+      color: black;
+    }
+    .ul2>li>a:hover,
+    .ul2>li>a:active {
+      display: inline-block;
+      padding: 3px;
+      width: 85%;
+      height: 1.5em;
+      line-height: 1.5em;
+      background: black;
+      border-radius: .5em;
+      color: white;
+    }
+    .ul1>li:hover>ul {
+      display:block;
+    }
   </style>
 </head>
 <body>
-  
+<nav>
+  <ul class="ul1">
+    <li>
+      <a href="javascript:void(0)">首页</a>
+      <ul class="ul2">
+        <li><a>游戏</a></li>
+        <li><a>音乐</a></li>
+        <li><a>图书</a></li>
+        <li><a>电影</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="javascript:void(0)">财经</a>
+      <ul class="ul2">
+        <li><a>股票</a></li>
+        <li><a>行情</a></li>
+        <li><a>基金</a></li>
+        <li><a>期货</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="javascript:void(0)">娱乐</a>
+      <ul class="ul2">
+        <li><a>明星</a></li>
+        <li><a>综艺</a></li>
+        <li><a>搞笑</a></li>
+        <li><a>演员</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
 </body>
 </html>
