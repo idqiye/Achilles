@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Achilles</title>
+	<link type="image/x-icon" rel="shortcut icon" href="">
+	<link rel="stylesheet" href="">
+	<style>
+		* {
+			margin: 10px;
+			padding: 0;
+		}
+		nav {
+			margin: 0;
+		}
+		ul {
+			margin: 0;
+			list-style-type: none;
+		}
+		.ul1 a {
+			margin: 0;
+			text-decoration: none;
+			color: black;
+		}
+		.ul1>li{
+			position: relative;
+			width: 6em;
+			margin: 0;
+
+
+		}
+		.ul1>li>a {
+			display: inline-block;
+			width: 6em;
+			height: 2em;
+			line-height: 2em;
+			text-align: center;
+			background: black;
+			color: white;
+		}
+		.ul2 {
+			display: none;
+			position: absolute;
+			left: 6em;
+			top: 0em;
+			width: 6em;
+		}
+		.ul2>li {
+			margin: 0;
+		}
+		.ul2>li>a {
+			display: inline-block;
+			width: 6em;
+			height: 2em;
+			line-height: 2em;
+			text-align: center;
+			background: gray;
+		}
+		.ul1>li:hover>ul {
+    		display:block;
+   		}
+	</style>
+</head>
+<body>
+<nav>
+	<ul class="ul1">
+		<li>
+			<a href="javascript:void(0)">首页</a>
+			<ul class="ul2">
+				<li><a>游戏</a></li>
+				<li><a>音乐</a></li>
+				<li><a>图书</a></li>
+				<li><a>电影</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="javascript:void(0)">财经</a>
+			<ul class="ul2">
+				<li><a>股票</a></li>
+				<li><a>行情</a></li>
+				<li><a>基金</a></li>
+				<li><a>期货</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="javascript:void(0)">娱乐</a>
+			<ul class="ul2">
+				<li><a>明星</a></li>
+				<li><a>综艺</a></li>
+				<li><a>搞笑</a></li>
+				<li><a>演员</a></li>
+			</ul>
+		</li>
+	</ul>
+</nav>
+</body>
+</html>
