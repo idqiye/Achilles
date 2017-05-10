@@ -1,6 +1,3 @@
-# WELCOME
-this a paragraph~
-# WEB
--about html/css<br/>
--about ECMAScript 5<br/>
--node.js & vue.js<br/>
+# WEB-html/css/js
+-how to develop the new website.
+-About used code frequently
