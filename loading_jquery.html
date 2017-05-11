@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>loading</title>
+  <link rel="shortcut icon" type="image/x-icon" href="">
+  <link rel="stylesheet" type="text/css" href="">
+  <style>
+  </style>
+</head>
+<body>
+  <ul class="show-area" style="min-height:100px"></ul>
+  <input type="button" class="page-btn-nick" value="more...">
+  <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>
+    (function(){
+      getData();  // 第一次获取数据
+      var m = 0, n = 2; // m为点击次数，n为一次加载的数据数
+      $('.page-btn-nick').click(getData);
+      function getData() {
+        // 假设请求的数据文件data.txt
+        $.ajax('data.txt').then(function(response){
+          var obj = {developer:[{name:'nike'},{name:'adidas'},{name:'puma'},{name:'ua'},{name:'asics'},{name:'vans'},{name:'newbalance'},{name:'lecoq'}]};
+          response = obj.developer; // 假设请求到的数据为obj
+          m++;
+          var data = "",elm = "";
+          if (m > (response.length%n == 0 ? response.length/n : parseInt(response.length/n))) {
+            data = response.slice(n * (m-1));
+            $('.page-btn-nick').html('no ohters');
+            $('.page-btn-nick').attr('disabled','disabled'); // 禁用点击按钮
+          } else {
+            data = response.slice(n * (m-1), n * m);
+          }
+          var len = data.length;
+          for (var i=0; i < len; i++){
+            elm += "<li>" + data[i].name + "</li>";
+          }
+          $('.show-area').append(elm);
+        }, function(err){
+          console.log(err);
+        });
+      }
+      
+      // 移动端点击响应效果
+      // $(".show-area").on("touchstart", function(e) {
+      //     e.preventDefault();
+      //     startX = e.originalEvent.changedTouches[0].pageX,
+      //             startY = e.originalEvent.changedTouches[0].pageY;
+      // });
+      // $(".show-area").on("touchmove", function(e) {
+      //     e.preventDefault();
+      //     moveEndX = e.originalEvent.changedTouches[0].pageX,
+      //             moveEndY = e.originalEvent.changedTouches[0].pageY,
+      //             X = moveEndX - startX,
+      //             Y = moveEndY - startY;
+
+      //     if ( Math.abs(X) > Math.abs(Y) && X > 0 ) {
+      //         alert("left 2 right");
+      //     }
+      //     else if ( Math.abs(X) > Math.abs(Y) && X < 0 ) {
+      //         alert("right 2 left");
+      //     }
+      //     else if ( Math.abs(Y) > Math.abs(X) && Y > 0) {
+      //         alert("top 2 bottom");
+      //         getData();
+      //     }
+      //     else if ( Math.abs(Y) > Math.abs(X) && Y < 0 ) {
+      //         alert("bottom 2 top");
+      //     }
+      //     else{
+      //         alert("just touch");
+      //     }
+      // });
+      
+    }());
+  </script>
+</body>
+</html>
