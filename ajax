@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>How to use Ajax</title>
+  <link rel="shortcut icon" type="image/x-icon" href="">
+  <link rel="stylesheet" type="text/css" href="">
+  <style>
+  </style>
+</head>
+<body>
+
+
+<script>
+  // 同域资源共享
+  
+  // 定义XHR对象
+  function createXHR(){
+    if (typeof XMLHttpRequest != "undefined"){
+      createXHR = function(){
+        return new XMLHttpRequest();
+      };
+    } else if (typeof ActiveXObject != "undefined"){
+      createXHR = function(){
+        if(typeof arguments.callee.activeXString != "string"){
+          var versions = ["MSXML2.XMLHttp.6.0", "MSXML2.XMLHttp.3.0", "MSXML2.XMLHttp"], i, len;
+          for (i=0,len=versions.length; i < len; i++){
+            try {
+              new ActiveXObject(versions[i]);
+              arguments.callee.activeXString = versions[i];
+              break;
+            } catch (ex){
+              // something
+            };
+          return new ActiveXObject(arguments.callee.activeXString);
+          };
+        };
+      };  
+    } else {
+      createXHR = function(){
+        throw new Error("No XHR object available");
+      };
+    };
+    return createXHR()
+  };
+  
+  // XHR对象的使用
+  var xhr = createXHR();
+  xhr.onreadystatechage = function(){
+    if (xhr.readyState == 4){
+      if ((xhr.status >= 200 && xhr.status <300) || xhr.status == 304){
+        alert(xhr.responseText);
+      } else {
+        throw new Error("Request was unsuccessful" + xhr.status);
+      };
+    };
+  };
+  // 用GET请求
+  var url =  "get_example.php";
+  url = addURLParam(url, "id", "123");
+  xhr.open("get", url, true); // true为使用异步加载，false为使用同步加载
+  xhr.send(null);
+  
+  function addURLParam(url, name, value){
+    url += (url.indexOf("?") == -1 ? "?" : "&");
+    url += encodeURIComponent(name) + "=" + encodeURIComponent(value);
+    return url;
+  };
+  
+  // 使用POST请求
+  xhr.open("post", "post_example.php", true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencode");
+  var form = document.getElementById("user-info");
+  xhr.send(serialize(form)); // XMLHttpRequest2级规范中可以使用new FormData对象来序列化表单
+  
+  function serialize(form){
+    var parts = [],
+    field = null,
+    i,
+    len,
+    j,
+    optLen,
+    option,
+    optValue;
+    for (i=0, len=form.elements.length; i < len; i++){
+      field = form.elements[i];
+      switch(field.type){
+        case "select-one":
+        case "select-multiple":
+        if (field.name.length){
+          for (j=0, optLen = field.options.length; j < optLen; j++){
+            option = field.options[j];
+            if (option.selected){
+              optValue = "";
+              if (option.hasAttribute){
+                optValue = (option.hasAtrribute("valule") ? option.value : option.text);
+              } else {
+                optValue = (option.atrributes["value"].specified ? option.value : option.text);
+              }
+              parts.push(encodeURIComponent(field.name) + "=" + encodeURIComponent(optValue));
+            }
+          }
+        }
+          break;
+        case undefined: // 字段集
+        case "file":
+        case "submit":
+        case "reset":
+        case "button":
+          break;
+        case "radio":
+        case "checkbox":
+          if (!field.checked){
+            break;
+          }
+        default:
+          // 不包含没有名字的表单字段
+          if (field.name.length){
+            parts.push(encodeURIComponent(field.name) + "=" + encodeURIComponet(field.value));
+          }
+      }
+    }
+    return parts.join("&");
+  }
+  
+  
+  
+</script>
+</body>
+</html>
