@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>json&jsonp</title>
+  <link type="stylesheet" href="">
+  <style>
+  </style>
+</head>
+<body>
+<p id="demo"></p>
+<script>
+  // json与对象字面量直接的转化
+  
+  //序列化选项
+  var person = {
+    name: function(){return "lin"},
+    hobby: ["football", "car"],
+    age: 24,
+    today: new Date(2017, 1, 8)
+  };
+  person.name = person.name.toString();
+  var jsonPerson = JSON.stringify(person, function(key, value){
+    switch(key) {
+      case "age":
+        return value + 1;
+      case "hobby":
+        return value.join(",");
+      default:
+        return value;
+    }
+  });  // jsonPerson为json数据
+  
+  // 解析选项
+  var strPerson = JSON.parse(jsonPerson, function(key, value){
+    if (key == "today") {
+      return new Date(value);
+    } else {
+      return value;
+    }
+  });
+  strPerson.name = eval("("+strPerson.name+")"); //还原person的name属性的值为函数状态
+  
+  // Jsonp的使用方法
+  var MYCALLBACK = function(data){
+    console.log("数据调用情况:" + data.status + "坐标:" + data.location);
+  } // Json数据里面包含着回调函数MYCALLBACK(data)，并且data里的数据作为参数
+  var url = document.createElement("script");
+  script.setAttribute("src", url);
+  document.getElementByTageName("body")[0].appendChild(script); // 回调函数要在定义函数的后面才能生效
+</script>
+</body>
+</html>
