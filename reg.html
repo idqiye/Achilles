@@ -1,0 +1,304 @@
+<!-- 1.提交按钮时，两个密码是否一致还未验证；2.依旧其他input按钮检测没有昨完 -->
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<title>reg</title>
+	<link rel="stylesheet" type="text/css" href="">
+	<style>
+		body {
+			font-family: "宋体", Arial, Helvetica, sans-serif;
+			color: #333333;
+			font-size:12px;
+			background:url() repeat-x #E2E2E2;
+		}
+		.reg {
+			width: 450px;
+			height: auto;
+			margin: 0 auto;
+			padding-top: 100px;
+		}
+		.topic {
+			background: url();
+			width: 450px;
+			height: 54px;
+		}
+		.content {
+			border: 1px solid #DBDBDB;
+			color: #003976;
+			background: #F9F9F9;
+			text-align: center;
+		}
+		.btn {
+			color: #000;
+			background: url();
+			width: 58px;
+			height: 27px;
+			border: 1px solid gray;
+			cursor: pointer;
+		}
+		.content-left {
+			text-align: left;
+		}
+		td {
+			height: 30px;
+			line-height: 30px;
+		}
+		.hint {
+			color: gray;
+		}
+		input[type="text"],
+		input[type="password"] {
+			width:160px;
+		}
+	</style>
+</head>
+<body>
+<div class="reg">
+	<div class="topic"></div>
+	<div class="content">
+		<form>
+			<table cellpadding="0" cellspacing="0">
+				<tr><td></td></tr>
+				<tr>
+					<td width="120px">姓名:</td>
+					<td><input type="text" id="name" name="name" required="required"></td>
+					<td width="120px" class="hint"><span>格式:中文</span></td>
+				</tr>
+				<tr>
+					<td>联系方式:</td>
+					<td><input type="text" id="phone" name="phone" required="required"></td>
+					<td class="hint"><span>格式:11位手机</span></td>
+				</tr>
+				<tr>
+					<td>密码:</td>
+					<td><input type="password" id="password" name="password" required="required"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>确认密码:</td>
+					<td><input type="password" id="password_enter" required="required"></td>
+					<td class="hint"><span>请再次确认密码</span></td>
+				</tr>
+				<tr>
+					<td>性别:</td>
+					<td  class="content-left"><input type="radio" name="sex" id="sex_boy">男<input type="radio" name="sex" id="sex_girl">女</td>
+					<td></td>
+					<!-- $("sex1").checked?"男":"女"，checked表示选择状态，select的选中直接返回value就行 -->
+				</tr>
+				<tr>
+					<td>学历:</td>
+					<td class="content-left">
+						<select id="select" name="educational">
+							<option value="高中">高中</option>
+							<option value="大专">大专</option>
+							<option value="本科">本科</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3"><input type="submit" value="提交" class="btn"></td>
+				</tr>
+				<tr><td></td></tr>
+			</table>
+		</form>
+	</div>
+</div>
+<script>
+	// 表单验证
+
+	// 验证--输入的号码是否有误
+	function numRepeat(num_input) {
+		var target = document.getElementById(num_input);
+		var num_value = target.value;
+		if (isNaN(num_value)) {
+			return falseChange(target, "请输入正确数字")
+		} else {
+			return trueChange(target);
+		}	
+	}
+
+
+	// 验证--必填字段验证是否为空
+	function requiredInput(form) {
+		var i,
+			len,
+			required_check,
+			required_atr;
+		for(i=0, len=form.elements.length; i < len; i++) {
+			required_check = form.elements[i]
+			required_atr = form.elements[i].getAttribute("required");
+			if (required_atr == "required" && required_check.value == "") {
+				falseChange(required_check, "此选项不能为空");
+				return false;
+			}
+		}
+		return true;
+	}
+
+	// 验证--密码的重复输入
+	function valueRepeat(target) {
+		var target = document.getElementById("password_enter");
+		var value_fir = document.getElementById("password").value;
+		var value_sec = target.value;
+		if (value_fir === value_sec) {
+			return trueChange(target);
+			
+		} else {
+			return falseChange(target, "请输入相同的密码");
+
+		}
+	};
+	
+	// 改变提示样式函数
+	function falseChange(target, hint_world) {
+		ieUser(target);
+		var target_last = target.parentNode.parentNode.lastChild.previousSibling;
+		target_last.innerText = hint_world;
+		target_last.style.color = "red";
+		return false;
+	};
+	function trueChange(target) {
+		ieUser(target);
+		var target_last = target.parentNode.parentNode.lastChild.previousSibling;
+		target_last.innerText = "正确";
+		target_last.style.color = "green";
+		return true;
+	}
+	// 判断是否是IE浏览器
+	function ieUser(target) {
+		if (navigator.appName === 'Microsoft Internet Explorer') {
+	  		if (navigator.userAgent.match(/Trident/i) && navigator.userAgent.match(/MSIE 8.0/i)) { 
+	  		// 判断浏览器内核是否为Trident内核IE8.0
+	  			var add_span = document.createElement("span");
+	  			target.parentNode.parentNode.appendChild(add_span)
+	   		}
+		}
+	}
+
+	// 失去焦点统一应用效果
+	function user_onblur(id, func) {
+		var id_input = document.getElementById(id);
+		id_input.onblur = function() {
+			if (id in result) {
+				result[id] = func(id);
+			}
+		
+		}
+	}
+
+	var result = {phone: false};
+	user_onblur("phone", numRepeat);
+	user_onblur("password", valueRepeat);
+	user_onblur("password_enter", valueRepeat);
+	
+	// 表单序列化函数
+	function serialize(form) {
+			var parts = [],
+			field = null,
+			i,
+			len,
+			j,
+			optLen,
+			option,
+			optValue;
+		for (i=0, len=form.elements.length; i < len; i++) {
+			field = form.elements[i];
+			switch(field.type){
+				case "select-one":
+				case "select-multiple":
+
+					if (field.name.length){
+						for (j=0, optLen=field.options.length; j < optLen; j++) {
+							option = field.options[j];
+							if (option.selected){
+								optValue = "";
+								if (option.hasAttribute){
+									optValue = (option.hasAttribute("value") ? option.value : option.text);
+								} else {
+									optValue = (option.attributes["value"].specified ? option.value : option.text);
+								};
+								parts.push(encodeURIComponent(field.name) + "=" + encodeURIComponent(optValue));
+							};							
+						}
+					}
+					break;
+				case undefined:
+				case "file":
+				case "submit":
+				case "reset":
+				case "button":
+				break;
+				case "radio":
+				case "checkbox":
+					if (!field.checked) {
+						break;
+					}
+				default:
+					if (field.name.length) {
+						parts.push(encodeURIComponent(field.name) + "=" + encodeURIComponent(field.value));
+					}
+			}
+		}
+		return parts.join("&");
+		};
+
+		// 添加事件对象
+		var EventUtil = {
+		addHandler: function(element, type, handler) {
+			if (element.addEventListener) {
+				element.addEventListener(type, handler, false);
+			} else if (element.attachEvent) {
+				element.attachEvent("on" + type, handler);
+			} else {
+				element["on" + type] = handler;
+			}
+		},
+		removeHandler: function(element, type, handler) {
+			if (element.removeEventListener) {
+				element.removeEventListener(type, handler, false);
+			} else if (element.detachEvent) {
+				element.detachEvent("on" + type, handler);
+			} else {
+				element["on" + type] = null;
+			}
+		},
+		getEvent: function(event) {
+			return event ? event : window.event;
+		},
+		getTarget: function(event) {
+			return event.target || event.srcElement;
+		},
+		preventDefault: function(event) {
+			if (event.preventDefault) {
+				event.preventDefault();
+			} else {
+				event.returnValue = false;
+			}
+		}
+	};
+
+	// 应用--发送表单数据
+	var myform = document.forms[0];
+	EventUtil.addHandler(myform, "submit", function(event) {
+		event = EventUtil.getEvent(event);
+		EventUtil.preventDefault(event); // 取消表单默认行为，以免重复提交
+		var result_all = true;
+		for (x in result) {
+			if (!result[x]) {
+				result_all = false;
+			};
+		};
+		if (result_all) {
+			alert("yes")
+			console.log(serialize(myform));
+		} else {
+			alert("no")
+		}
+	});
+	
+	</script>
+</script>
+</body>
+</html>
