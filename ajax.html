@@ -18,21 +18,21 @@
   // 同域资源共享
   
   // 定义XHR对象
-  function createXHR(){
-    if (typeof XMLHttpRequest != "undefined"){
+  function createXHR() {
+    if (typeof XMLHttpRequest != "undefined") {
       createXHR = function(){
         return new XMLHttpRequest();
       };
-    } else if (typeof ActiveXObject != "undefined"){
+    } else if (typeof ActiveXObject != "undefined") {
       createXHR = function(){
-        if(typeof arguments.callee.activeXString != "string"){
+        if(typeof arguments.callee.activeXString != "string") {
           var versions = ["MSXML2.XMLHttp.6.0", "MSXML2.XMLHttp.3.0", "MSXML2.XMLHttp"], i, len;
-          for (i=0,len=versions.length; i < len; i++){
+          for (i=0,len=versions.length; i < len; i++) {
             try {
               new ActiveXObject(versions[i]);
               arguments.callee.activeXString = versions[i];
               break;
-            } catch (ex){
+            } catch (ex) {
               // something
             };
           return new ActiveXObject(arguments.callee.activeXString);
@@ -40,7 +40,7 @@
         };
       };  
     } else {
-      createXHR = function(){
+      createXHR = function() {
         throw new Error("No XHR object available");
       };
     };
@@ -49,9 +49,9 @@
   
   // XHR对象的使用
   var xhr = createXHR();
-  xhr.onreadystatechage = function(){
+  xhr.onreadystatechage = function() {
     if (xhr.readyState == 4){
-      if ((xhr.status >= 200 && xhr.status <300) || xhr.status == 304){
+      if ((xhr.status >= 200 && xhr.status <300) || xhr.status == 304) {
         alert(xhr.responseText);
       } else {
         throw new Error("Request was unsuccessful" + xhr.status);
@@ -64,7 +64,7 @@
   xhr.open("get", url, true); // true为使用异步加载，false为使用同步加载
   xhr.send(null);
   
-  function addURLParam(url, name, value){
+  function addURLParam(url, name, value) {
     url += (url.indexOf("?") == -1 ? "?" : "&");
     url += encodeURIComponent(name) + "=" + encodeURIComponent(value);
     return url;
@@ -76,7 +76,7 @@
   var form = document.getElementById("user-info");
   xhr.send(serialize(form)); // XMLHttpRequest2级规范中可以使用new FormData对象来序列化表单
   
-  function serialize(form){
+  function serialize(form) {
     var parts = [],
     field = null,
     i,
@@ -85,17 +85,17 @@
     optLen,
     option,
     optValue;
-    for (i=0, len=form.elements.length; i < len; i++){
+    for (i=0, len=form.elements.length; i < len; i++) {
       field = form.elements[i];
-      switch(field.type){
+      switch(field.type) {
         case "select-one":
         case "select-multiple":
-        if (field.name.length){
-          for (j=0, optLen = field.options.length; j < optLen; j++){
+        if (field.name.length) {
+          for (j=0, optLen = field.options.length; j < optLen; j++) {
             option = field.options[j];
-            if (option.selected){
+            if (option.selected) {
               optValue = "";
-              if (option.hasAttribute){
+              if (option.hasAttribute) {
                 optValue = (option.hasAtrribute("valule") ? option.value : option.text);
               } else {
                 optValue = (option.atrributes["value"].specified ? option.value : option.text);
@@ -113,12 +113,12 @@
           break;
         case "radio":
         case "checkbox":
-          if (!field.checked){
+          if (!field.checked) {
             break;
           }
         default:
           // 不包含没有名字的表单字段
-          if (field.name.length){
+          if (field.name.length) {
             parts.push(encodeURIComponent(field.name) + "=" + encodeURIComponet(field.value));
           }
       }
