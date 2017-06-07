@@ -1,4 +1,4 @@
-## 元素
+## 元素类型类：
 * 块元素：
      address、blockquote、center、dir、div、dl、dt、dd、fieldset、form、h1~h6、hr、isindex、menu、noframes、noscript、ol、p、pre、table、ul等
 * 内联元素：
@@ -19,7 +19,7 @@
 * <textarea>不可以嵌套自己，自行参考该标签在w3School教程上的实例。
 * 这里说明一下，虽然可以可以使用display设置block和inline，但以此来定义嵌套关系很显然不严谨。（不知道搜索引擎会不会抓取CSS内容？）
 
-## 进阶知识
+## 进阶知识：
 * WEB标准系列-HTML元素嵌套
 * 由于现在自己接触不到HTML5，所以先保留
 * 嵌套错误可能引起的问题
